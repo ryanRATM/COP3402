@@ -20,7 +20,7 @@ union lval {
 } lval;
 
 token_type lex();
-void printCode(int isClean);
+void printCode(int isSource, int isClean);
 
 int main(int argc, char** argv) {
     int i;
@@ -38,9 +38,7 @@ int main(int argc, char** argv) {
 
     token_type tok;
     // if we should print the code
-    if(isSource == 1) {
-        printCode(isClean);
-    }
+    printCode(isSource, isClean);
 
     // set to beginning of input
     rewind(stdin);
@@ -216,15 +214,16 @@ token_type lex() {
   // if does not match anything else then error of invalid variable name
 }
 
-void printCode(int isClean) {
+void printCode(int isSource, int isClean) {
     char c;
-    if(isClean == 0) {
+    if(isSource == 1) {
         printf("source code:\n------------\n");
         while((c = getchar()) != EOF) {
             printf("%c", c);
         }
         printf("\n\n");
-    } else {
+    }
+    if(isClean == 1) {
         rewind(stdin);
         printf("source code without comments:\n------------\n");
         while((c = getchar()) != EOF) {
