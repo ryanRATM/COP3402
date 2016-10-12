@@ -47,6 +47,10 @@ int main(int argc, char** argv) {
         if(tok == numbersym) {
             printf("%-12d %d\n", lval.num, tok);
         }
+        // catch if error
+        else if(elsesym < tok) {
+            printf("\n");
+        }
         else if(tok != commentsym) {
             printf("%-12s %d\n", lval.id, tok);
         }
@@ -140,7 +144,7 @@ token_type lex() {
     }
     ungetc(c, stdin); // give back character borrowed
     // checking if have error for
-    if(65535 < lval.num) {
+    if(65535 < lval.num || lval.num < 0) {
         printf("--!-- Error: Number is too large --!--");
         return numberToLargesym;
     }
